@@ -1,14 +1,16 @@
 %% DTFT
 x=[1,1,0,1];
 syms w
-subplot(4,1,1);%%subplot要写在画的subplot的上面
+%subplot(4,1,1);%%subplot要写在画的subplot的上面
 X_dtft = 1+exp(-1i*w)+exp(-1i*3*w);
-ezplot(abs(X_dtft),[0,2*pi]);
-xlabel('w');
+ezplot(w/pi,abs(X_dtft),[0,2*pi]);
+xlim([0,2]);
+ylim([0.5,3]);
+xlabel('\omega/\pi');
 ylabel('|x(e^{j\omega})|');
 title('DTFT');
 %% DFT
-subplot(4,1,2)
+%subplot(4,1,2)
 N = 4;
 W_N=exp(-1i*2*pi/N);
 DFT_w=[1,1,1,1;
@@ -18,29 +20,31 @@ DFT_w=[1,1,1,1;
 X_DFT=DFT_w*x';
 k=0:3;
 stem(k,abs(X_DFT),'filled');
+xlim([0,3.5]);
+ylim([0,3.5]);
 xlabel('k');
 ylabel('|x(k)|');
 title('DFT');
 %% 内插重建
-subplot(4,1,3);
+%subplot(4,1,3);
 X_ejw = 0 ;
 for k_1 = 0 : N-1
     X_ejw =X_ejw + X_DFT(k_1+1)*(1-exp(-1i*w*N))/(1-W_N^k_1*exp(-1i*w));
 end
 X_ejw = X_ejw/N;
-ezplot(abs(X_ejw),[0,2*pi]);
-xlabel('w');
+ezplot(w/pi,abs(X_ejw),[0,2*pi]);
+xlabel('\omega/\pi');
 ylabel('|x_1(e^{j\omega})|');
 title('内插重建');
 %% 比较
-subplot(4,1,4);
-ezplot(abs(X_ejw),[0,2*pi]);
+%subplot(4,1,4);
+ezplot(w/pi,abs(X_ejw),[0,2*pi]);
 hold on;
 n = 0:pi/4:2*pi;
 X_dtft1 = 1+exp(-1i*n)+exp(-1i*3*n);
-ezplot(abs(X_dtft),[0,2*pi]);
+ezplot(w/pi,abs(X_dtft),[0,2*pi]);
 ylabel('|x(e^{j\omega})|');
-xlabel('w');
+xlabel('\omega/\pi');
 title('比较');
 legend('内插重建','DTFT');
 hold on;
