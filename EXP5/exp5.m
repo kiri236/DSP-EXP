@@ -36,17 +36,18 @@ x=square(2*pi/N*n);
 X=fft(x);
 subplot(4,1,1);
 plot(n,abs(X));
-xlabel('\omega');
-ylabel('|X(\omega)|');
+xlabel('k');
+ylabel('|X(k)|');
 title('x(n)的幅频响应');
+%%
 i=3;
 for j = 1:1:5
     subplot(4,2,i);
     y=filtfilt(b_values{j},a_values{j},x);
     Y=fft(y);
     plot(n,abs(Y));
-    xlabel('\omega');
-    ylabel('|Y(\omega)|');
+    xlabel('k');
+    ylabel('|Y(k)|');
     title(sprintf('r=%d时x(n)通过滤波器后的波形y(n)的幅频响应',r_values(j)));
     i=i+1;
 end
@@ -57,7 +58,9 @@ subplot(4,1,1);
 plot(n,x);
 xlabel('n');
 ylabel('x(n)');
+ylim([-1/2,1.2]);
 title('周期为100的方波信号x(n)(取第2-5个周期)');
+%%
 i=3;
 for j = 1:1:5
     subplot(4,2,i);
@@ -89,17 +92,19 @@ ws = ws / (fs / 2);
 [b, a] = cheby1(n1, Ap, Wp, 'high');
 
 % 绘制频率响应
-%fvtool(b, a);
-%title('切比雪夫 I 型高通滤波器的幅频响应');
+% fvtool(b, a);
+% title('切比雪夫 I 型高通滤波器的幅频响应');
+%%
 y_hp=filtfilt(b,a,x);
-subplot(4,1,1);
+%%subplot(4,1,1);
 plot(n,y_hp);
 xlabel('n');
 ylabel('y_{hp}(n)');
 title('x(n)经过切比雪夫 I 型高通滤波器后的波形y_{hp}(n)');
+%%
 i=3;
 for j = 1:1:5
-    subplot(4,2,i);
+    %subplot(4,2,i);
     y=filtfilt(b_values{j},a_values{j},x);
     y1 = y+y_hp;
     plot(n,y1);
