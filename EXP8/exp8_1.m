@@ -11,4 +11,4 @@ freqz(b,1);
 title("FIR低通滤波器的幅频特性和相频特性");
 %% 群延时
 grpdelay(b,1);
-title("FIR低通滤波器的群延时");
+title("FIR低通滤波器的群时延");

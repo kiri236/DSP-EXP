@@ -69,23 +69,38 @@ xlabel("n");
 ylabel("x_{2FIR}(n)");
 title("x_2(n)经过FIR滤波器后的时域波形");
 
+%% 群时延
+subplot(2,2,1);
+grpdelay(x1_IIR,1)
+title("x_1(n)经过IIR低通滤波器后的群时延");
+subplot(2,2,2);
+grpdelay(x1_FIR,1)
+title("x_1(n)经过FIR低通滤波器后的群时延");
+subplot(2,2,3);
+grpdelay(x2_IIR,1)
+title("x_2(n)经过IIR低通滤波器后的群时延");
+subplot(2,2,4);
+grpdelay(x2_FIR,1)
+title("x_2(n)经过FIR低通滤波器后的群时延");
 %% x=x1+x2
 x3 = x1+x2;
 subplot(3,1,1);
 stem(n,x3);
-
+xlabel('n');
+ylabel('x(n)');
+title('x(n)=x_1(n)+x_2(n)');
 %% x3经过IIR
 x3_IIR = filter(IIRb,IIRa,x3);
 subplot(3,1,2);
 stem(n,x3_IIR);
 xlabel("n");
-ylabel("x_{3IIR}(n)");
-title("x_3(n)经过IIR滤波器后的时域波形");
+ylabel("x_{IIR}(n)");
+title("x(n)经过IIR滤波器后的时域波形");
 
 %% x2经过FIR
 x3_FIR = filter(firb,1,x3);
 subplot(3,1,3);
 stem(n,x3_FIR);
 xlabel("n");
-ylabel("x_{3FIR}(n)");
-title("x_3(n)经过FIR滤波器后的时域波形");
+ylabel("x_{FIR}(n)");
+title("x(n)经过FIR滤波器后的时域波形");

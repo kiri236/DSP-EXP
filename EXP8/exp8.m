@@ -12,7 +12,8 @@ As = 40;
 freqz(b,a);
 title("IIR滤波器的幅频特性和相频特性");
 %% 群时延
-grpdelay(b1,a1);
+grpdelay(b,a);
+ylim([0,20])
 title("IIR滤波器的群时延");
 
 
