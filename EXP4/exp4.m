@@ -4,10 +4,11 @@ x = 2*sin(pi/4*n)+sin(5*pi/8*n)+3*sin(3*pi/4*n);
 %% DFT
 subplot(1,2,1);
 X_DFT = x * (exp(-1j * 2*pi / N)).^(n' * n);
-stem(n,abs(X_DFT))
+
+stem(n,abs(X_DFT));
 %% FFT
-subplot(1,2,2);
-X_FFT=FFT(x,N,1);
+%subplot(1,2,2);
+X_FFT=FFT1(x,N);
 abs(X_FFT)
 stem(n,abs(X_FFT));
 function X=FFT(a,n,inv)
@@ -33,4 +34,27 @@ function X=FFT(a,n,inv)
             X((i+floor((n+1)/2))) = evefft(i)-w^i*oddfft(i);
         end
     end
+end
+function X = FFT1(x,n)
+    tot = 1;
+    while tot < n
+        tot=tot*2;
+    end
+    n = tot;
+    round = log2(n) ;
+    row = 1;
+    col = n/2;
+    for m = 1: round
+        temp = zeros(2*row,col);
+        for u = 1:row
+            X1 = x(u,1:col);
+            X2 = x(u,col+1:2*col);
+            W = exp(-1j * 2*pi / n * (0:col-1) * row);
+            temp(2*u-1: 2*u, 1:col) = [X1+X2; (X1-X2).*W];
+        end
+        x=temp;
+        row = row*2;
+        col = col/2;
+    end
+    X = x';
 end
